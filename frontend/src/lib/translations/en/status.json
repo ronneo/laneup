@@ -1,0 +1,12 @@
+{
+    "status_queue_close":"Your queue number has been closed",
+    "status_qr_code_scan":"Scan this to track the status on your mobile",
+    "status_queue_number":"Your Queue number is ",
+    "status_queue_number_deleted":"Your queue number has been closed",
+    "status_queue_number_next":"Your queue number is coming up next",
+    "status_queue_number_call":"Your queue number has been called",
+    "status_queue_number_cancel":"Cancel your number",
+    "status_queue_number_cancel_qn":"Are you sure you want to cancel your queue?",
+    "status_queue_queue_count":"There are {{count}} {{count;1: number; default: numbers }} in queue",
+    "status_queue_queue_time":"with an estimated waiting time of {{count}} {{count;1: minute; default: minutes }} "
+}
