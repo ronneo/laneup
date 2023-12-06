@@ -47,3 +47,9 @@ CREATE TABLE users (
     queue integer,
     time_cleared timestamp with time zone
 );
+
+CREATE TABLE settings (
+    setting_id SERIAL PRIMARY KEY,
+    name character varying(200) UNIQUE,
+    value character varying(255)
+);

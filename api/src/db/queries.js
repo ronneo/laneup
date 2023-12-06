@@ -239,6 +239,7 @@ const getQueueEntryStatus = (key) => {
             }
             resolve({
                 'branchKey':results.rows[0]['branch_key'],
+                'mobile':results.rows[0]['mobile'],
                 'timestamp':results.rows[0]['time_created'],
                 'queue':results.rows[0]['queue_prefix']+""+(parseInt(results.rows[0]['queue'])+parseInt(results.rows[0]['queue_seed'])),
                 'status':results.rows[0]['status']
@@ -353,6 +354,52 @@ const getQueueStatus = (key) => {
                     count:results.rows[0]['queue_count'],
                     time:results.rows[0]['est_time'],
                     groupID:results.rows[0]['group_id'],
+                })
+            }
+
+        })
+    })
+}
+
+const getNextQueueStatus = (userGroupID, count) => {
+    //get the next N queue number away from key
+    const query = `
+    WITH entry AS (
+        SELECT group_id, time_created, mobile 
+        FROM users 
+        WHERE group_user_id = $2
+    )
+     
+    SELECT mobile, est_time, key
+    FROM users
+    LEFT JOIN groups ON (users.group_id = groups.group_id)
+    WHERE 
+        status = $1
+        AND time_created > CURRENT_DATE
+        AND time_created >= (SELECT time_created FROM entry)
+        AND users.group_id = (SELECT group_id FROM entry)
+    ORDER BY time_created DESC
+    OFFSET $3
+    FETCH FIRST ROW ONLY
+    `;
+
+    let offset = parseInt(count) - 1;
+    if (offset < 0) {
+        return;
+    }
+
+    return new Promise((resolve, reject) => {
+        pool.query(query, [QUEUE_STATUS.WAITING, userGroupID, offset], (error, results) => {
+            if (error) {
+                return reject(error)
+            }
+            if (results.rows.length == 0) {
+                resolve({})
+            } else {
+                resolve({
+                    mobile:results.rows[0]['mobile'],
+                    time:results.rows[0]['est_time'],
+                    key:results.rows[0]['key'],
                 })
             }
 
@@ -591,6 +638,7 @@ export default {
     getQueueStatus,
     getQueueStatusByID,
     getQueueEntryStatus,
+    getNextQueueStatus,
     getBranchStatus,
     setQueueStatus,
     setQueueStatusByKey,

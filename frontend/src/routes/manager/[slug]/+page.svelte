@@ -84,7 +84,7 @@
                 } 
             }
         })
-        let bodyVar = {"status":QUEUE_STATUS.COMPLETED}
+        let bodyVar = {"status":QUEUE_STATUS.COMPLETED, 'next':true}
 		fetch(ApiURL+'user/'+nextNumber, {
             method:'POST',
             headers: { "Content-Type": "application/json" },
