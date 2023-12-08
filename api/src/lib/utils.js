@@ -29,16 +29,22 @@ export const generatePasswordHash = (password, salt) => {
 }
 
 export const validateEmail = (email) => {
-    return String(email)
+    let results = String(email)
         .toLowerCase()
         .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
+    if (results === null) return false;
+    return true;
 };
 
 export const validatePassword = (password) => {
-    return String(password)
+    //password requirement
+    //at least 8 characters with lowercase, uppercase, digit and "@.#$!%*?&" symbol
+    let results = String(password)
         .match(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[a-zA-Z\d@.#$!%*?&]{8,}$/
     );
+    if (results === null) return false;
+    return true;
 }
