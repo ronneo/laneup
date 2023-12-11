@@ -14,7 +14,6 @@ const port = process.env.PORT
 //Start websocket server
 const wss = new WebSocketServer({ port: process.env.PUBLIC_WS_PORT })
 wss.on('connection', wsconn.initialConnection)
-apiRoutes.wsconn = wsconn
 
 const app = express()
 app.use(cors({origin: '*'}))

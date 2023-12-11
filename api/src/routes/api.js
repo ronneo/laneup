@@ -1,9 +1,9 @@
 import express from 'express'
 import db from '../db/queries.js'
 import messaging from '../lib/messaging/twilio.js'
+import wsconn from '../ws/connections.js'
 
 let router = {}
-router.wsconn = null
 router.routes = express.Router()
 
 router.routes.post('/status/delete/:id', (request, response) => { 
@@ -11,7 +11,7 @@ router.routes.post('/status/delete/:id', (request, response) => {
     const status = request.body.status
     db.setQueueStatusByKey(key,status).then(results => {
         response.status(200).json({'id':results.id})
-        router.wsconn.broadcastNewEntry(results.groupID)
+        wsconn.broadcastNewEntry(results.groupID)
     }).catch(err => {
         console.error(err)
     })
@@ -55,7 +55,7 @@ router.routes.post('/user/', (request, response) => {
         })
         
         response.status(200).json({'key':results.key})
-        router.wsconn.broadcastNewEntry(results.groupID)
+        wsconn.broadcastNewEntry(results.groupID)
     }).catch(err => {
         console.error(err)
     })
@@ -69,7 +69,7 @@ router.routes.post('/user/:id', (request, response) => {
 
     db.setQueueStatus(userGroupID, status).then(results => {
         response.status(200).json({'id':userGroupID});
-        router.wsconn.broadcastNewEntry(results.groupID);
+        wsconn.broadcastNewEntry(results.groupID);
 
         //check for the next entry and alert them. By number
         //we need a flag to indicate if we can trigger the alert, 
