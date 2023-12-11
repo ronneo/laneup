@@ -11,9 +11,10 @@ const mobilePrefix = process.env.MSG_TWILIO_COUNTRY_CODE;
 
 const init = () => {
     if (accountSid === '' || authToken === '') {
-        return false
+        return false;
     } else {
         client = twilio(accountSid, authToken);
+        return true;
     }
 }
 
@@ -31,7 +32,10 @@ const formatMessage = (template, args) => {
 }
 
 const submtQueueMessage = (clientNumber, queueNumber, waitingTime) => {
-    init();
+    let connected = init();
+    if (connected === false) {
+        return;
+    }
     clientNumber = santizeNumber(clientNumber)
     client.messages.create({
         body: formatMessage(MSG_TEMPLATES.NEWQUEUE, [queueNumber, waitingTime]),
@@ -42,7 +46,10 @@ const submtQueueMessage = (clientNumber, queueNumber, waitingTime) => {
 }
 
 const reminderMessage = (clientNumber, waitingTime) => {
-    init();
+    let connected = init();
+    if (connected === false) {
+        return;
+    }
     clientNumber = santizeNumber(clientNumber)
     client.messages.create({
         body: formatMessage(MSG_TEMPLATES.UPCOMINGQUEUE, [waitingTime]),

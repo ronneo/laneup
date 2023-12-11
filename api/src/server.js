@@ -8,12 +8,16 @@ import apiRoutes from './routes/api.js'
 import authRoutes from './routes/auth.js'
 import manageRoutes from './routes/manage.js'
 
-dotenv.config()
+dotenv.config({
+    path:`.env.${process.env.NODE_ENV}`
+})
 const port = process.env.PORT
 
 //Start websocket server
-const wss = new WebSocketServer({ port: process.env.PUBLIC_WS_PORT })
-wss.on('connection', wsconn.initialConnection)
+if (process.env.PUBLIC_WS_PORT === false) {
+    const wss = new WebSocketServer({ port: process.env.PUBLIC_WS_PORT })
+    wss.on('connection', wsconn.initialConnection)
+}
 
 const app = express()
 app.use(cors({origin: '*'}))
