@@ -34,7 +34,7 @@ Admins to update groups/branches
 1. Download this repositary
 2. Run `./build.sh`
 3. Go to deployments folder and run `docker compose up`
-4. Log in to /admin and update the default password
+4. Go to `/install` to create a new admin account
 
 ## Backend Set up
 The project consists of 3 separate backend components (services)

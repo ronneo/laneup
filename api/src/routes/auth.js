@@ -13,16 +13,37 @@ let router = express.Router()
 router.post('/create/',(request, response) => {
     const email = request.body.email
     const password = request.body.password
-    const companyID = request.body.company
+    const companyID = request.body.cid
 
     const salt = generateSalt(16)
     const hash = generatePasswordHash(password, salt)
 
-    db.createAdmin(email, hash, salt, companyID).then(results => {
+    db.getAdminCount().then(results => {
+        if (results.count > 0) {
+            return Promise.reject('Admin already exist');
+        } else {
+            return db.createAdmin(email, hash, salt, companyID);
+        }
+    })
+    .then(results => {
         response.status(200).json({'id':results.adminID})
+    }).catch(err => {
+        console.error('Creating Admin failed: ', err);
+        response.status(500).send();
+    })
+})
+
+router.get('/install/', (request, response) => {
+    db.getAdminCount().then(results => {
+        let returnRes = {'installed':false}
+        if (results.count > 0) {
+            returnRes = {'installed':true}
+        }
+        response.status(200).json(returnRes)
     }).catch(err => {
         console.error(err)
     })
+
 })
 
 router.post('/login/',(request, response) => {

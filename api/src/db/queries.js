@@ -538,6 +538,23 @@ const getAdmin = (email) => {
     })
 }
 
+const getAdminCount = () => {
+    const query = `SELECT COUNT(admin_id) as admin_count FROM admins`
+    return new Promise((resolve, reject) => {
+        pool.query(query, [], (error, results) => {
+            if (error) {
+                return reject(error)
+            }
+            if (results.rowCount === 0) {
+                return reject(error);
+            }
+            resolve({
+                count: parseInt(results.rows[0]['admin_count'])
+            })
+        })
+    })
+}
+
 const createAdmin = (email, password, salt, companyID) => {
     const query = `
     INSERT INTO admins (email, password, salt, company_id) 
@@ -643,6 +660,7 @@ export default {
     setQueueStatus,
     setQueueStatusByKey,
     getAdmin,
+    getAdminCount,
     createAdmin,
     updateAdmin,
     createSession,
