@@ -121,9 +121,9 @@
 {#if stage == 2}
 <div class="m-auto text-center" transition:slide|local>
     <div class="title">How many people are there in your group?</div>
-    <div class="text-center grid grid-cols-2 gap-4 my-6 w-1/4 md:w-8/12 m-auto">
+    <div class="text-center grid grid-cols-2 gap-4 my-6 w-11/12 lg:w-1/2 md:w-8/12 m-auto">
         {#each groups as group}
-            <button class="rounded-md text-3xl border-slate-300 p-4 border hover:bg-slate-100 active:bg-slate-300" on:click={() => selectGroup(group.groupID)}>{group.groupName}</button>
+            <button class="rounded-md text-xl md:text-3xl border-slate-300 p-4 border hover:bg-slate-100 active:bg-slate-300" on:click={() => selectGroup(group.groupID)}>{group.groupName}</button>
         {/each}
     </div>
     <ButtonGroup>
@@ -134,7 +134,7 @@
 {/if}
 {#if stage == 3}
 <div class="m-auto text-center" transition:slide|local>
-    <div class="text-4xl mb-10">
+    <div class="text-4xl mb-10 pt-4">
         {#if groupID == 0} No Group is selected 
         {:else} Table for {groupName} 
         {/if}

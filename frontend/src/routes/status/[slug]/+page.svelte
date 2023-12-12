@@ -122,7 +122,7 @@
         goto("/new/"+data.branchKey,{replaceState:true})
     }
 
-    let cardClass = 'w-1/3 text-center p-6 rounded-xl m-auto mt-8 mb-5 '
+    let cardClass = 'w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3 text-center p-6 rounded-xl m-auto mt-8 mb-5 '
     $: {
         let bgColor = 'bg-teal-200'
         if (checkgreen) {
@@ -134,7 +134,7 @@
         if (checkred) {
             bgColor = 'bg-red-600 '
         }
-        cardClass = 'w-1/3 text-center p-6 rounded-xl m-auto mt-8 mb-5 ' + bgColor
+        cardClass = 'w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3 text-center p-6 rounded-xl m-auto mt-8 mb-5 ' + bgColor
     }
 </script>
 
