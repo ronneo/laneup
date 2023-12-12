@@ -38,7 +38,6 @@ export const actions = {
             }
 
         } catch (error) {
-            console.log('final error')
             return fail(400, { invalid: true });
         }
     }

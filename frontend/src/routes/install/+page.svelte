@@ -2,7 +2,6 @@
     import {
         Label,
         Input,
-        Checkbox,
         Button,
         Card,
         Alert,
@@ -17,15 +16,15 @@
 <div class="h-screen flex justify-center items-center">
     <Card class="w-11/12">
         <form class="flex flex-col space-y-6" method="POST">
-            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Sign in</h3>
+            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Create new admin</h3>
             {#if form?.incorrect}
             <Alert dismissable={true} accent={true} color="red">
                 <span class="font-medium">Invalid Email
             </Alert>
             {/if}
-            {#if form?.invalid}
+            {#if form?.passwordIncorrect}
             <Alert dismissable={true} accent={true} color="red">
-                <span class="font-medium">Incorrect Email or password
+                <span class="font-medium">Password does not match
             </Alert>
             {/if}
             <Label class="space-y-2">
@@ -33,13 +32,14 @@
                 <Input type="email" name="email" placeholder="name@company.com" required value={form?.email ?? ''}/>
             </Label>
             <Label class="space-y-2">
-                <span>Your password</span>
-                <Input type="password" name="password" placeholder="•••••" required />
+                <span>Your new password</span>
+                <Input type="password" name="password" placeholder="" required />
             </Label>
-            <div class="flex items-start">
-                <Checkbox name="remember">Remember me</Checkbox>
-            </div>
-            <Button color="blue" type="submit" class="w-full1">Login to your account</Button>
+            <Label class="space-y-2">
+                <span>Confirm password</span>
+                <Input type="password" name="passwordc" placeholder="" required />
+            </Label>
+            <Button color="blue" type="submit" class="w-full1">Create Admin Account</Button>
         </form>
     </Card>
 </div>

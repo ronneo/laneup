@@ -15,7 +15,6 @@ export const actions = {
         let loginSuccess:boolean = false
 
         if (!validateEmail(email)) {
-            console.log('invalid')
             return fail(400, { email, incorrect: true });
         }
 
