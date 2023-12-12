@@ -19,7 +19,11 @@ router.routes.post('/status/delete/:id', (request, response) => {
 router.routes.get('/status/:key',(request, response) => {
     const key = request.params.key
     db.getQueueEntryStatus(key).then(results => {
-        response.status(200).json(results)
+        response.status(200).json({
+            'timestamp':results.timestamp,
+            'queue':results.queue,
+            'status':results.status
+        })
     }).catch(err => {
         console.error(err)
     })
