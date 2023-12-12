@@ -31,6 +31,10 @@ services:
       API_SERVER: /
       SET_HTTPS: 0
       PORT: 3001
+      MSG_TWILIO_COUNTRY_CODE:
+      MSG_TWILIO_ACCT_ID:
+      MSG_TWILIO_ACCT_TOKEN:
+      MSG_TWILIO_NUMBER:
 volumes:
   db:
     driver: local
