@@ -1,7 +1,9 @@
 import pg from 'pg'
 import * as dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({
+    path:`.env.${process.env.NODE_ENV}`
+})
 
 export default new pg.Pool({
     user: process.env.DB_USER,

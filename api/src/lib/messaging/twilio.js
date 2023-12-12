@@ -3,7 +3,10 @@ import * as dotenv from 'dotenv'
 import {MSG_TEMPLATES} from '../msgtemplates.js'
 
 let client = null
-dotenv.config()
+dotenv.config({
+    path:`.env.${process.env.NODE_ENV}`
+})
+
 const accountSid = process.env.MSG_TWILIO_ACCT_ID;
 const authToken = process.env.MSG_TWILIO_ACCT_TOKEN;
 const extNumber = process.env.MSG_TWILIO_NUMBER;

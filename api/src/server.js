@@ -14,7 +14,7 @@ dotenv.config({
 const port = process.env.PORT
 
 //Start websocket server
-if (process.env.PUBLIC_WS_PORT === false) {
+if (process.env.PUBLIC_WS_PORT != '' && process.env.PUBLIC_WS_PORT != 0) {
     const wss = new WebSocketServer({ port: process.env.PUBLIC_WS_PORT })
     wss.on('connection', wsconn.initialConnection)
 }
