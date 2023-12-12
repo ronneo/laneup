@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS companies , admins, sessions, company_branches, groups, users, settings ;
