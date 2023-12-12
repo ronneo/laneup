@@ -41,3 +41,10 @@ The project consists of 3 separate backend components (services)
 - Web Front-end server (built in Sveltekit)
 - API + Web Socket server (currently on NodeJS)
 - Database on Postgresql
+
+## Running Tests
+**Requirements**
+- Unit tests have been added for the API server
+- Unit tests requires a dummy Postgres database connection
+- Tests utilises `.env.testing` for database connection
+- Run `npm test` under `/api` folder
