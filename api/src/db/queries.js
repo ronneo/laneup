@@ -116,8 +116,8 @@ const addGroup = (groupName, queueSeed, queuePrefix, branchID) => {
                 return reject(error)
             }
             resolve({
-                branchID:results.rows[0].group_id,
-                branchName:results.rows[0].group_name
+                groupID:results.rows[0].group_id,
+                groupName:results.rows[0].group_name
             })
         })
     })
@@ -136,7 +136,7 @@ const editGroup = (groupName, queueSeed, queuePrefix, branchID, groupID) => {
                 return reject(error)
             }
             resolve({
-                branchID:results.rows[0].group_id,
+                groupID:results.rows[0].group_id,
             })
         })
     })
@@ -588,6 +588,21 @@ const updateAdmin = (adminID, password, salt) => {
     })
 }
 
+const deleteAdmin = (adminID) => {
+    const query = `
+    DELETE FROM admins WHERE admin_id = $1
+    `
+
+    return new Promise((resolve, reject) => {
+        pool.query(query, [adminID], (error, results) => {
+            if (error) {
+                return reject(error)
+            }
+            resolve({'result':'success'})
+        })
+    })
+}
+
 const createSession = (adminID, sessionID, source ,ipAddr) => {
     const query = `
     INSERT INTO sessions (admin_id, session_id, source, ip_address, time_created, last_access) 
@@ -663,6 +678,7 @@ export default {
     getAdminCount,
     createAdmin,
     updateAdmin,
+    deleteAdmin,
     createSession,
     deleteSession,
     getSession

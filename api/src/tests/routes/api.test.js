@@ -12,11 +12,9 @@ afterAll(() => {
 
 const request = supertest(server);
 /*
-Mock some functions that do not need to be tested
+Mock web socket functions that cannot be tested
 */
-wsconn.broadcastNewEntry = (groupID) => {
-    //rewrite websocket
-}
+jest.mock('../../ws/connections.js');
 
 describe('Creating and deleting queue', () => {
     let key = '';
