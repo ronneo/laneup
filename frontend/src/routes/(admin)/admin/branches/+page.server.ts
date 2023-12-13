@@ -84,7 +84,7 @@ export const actions = {
             });
             let branchInfo = await branchResponse.json();
             
-            if (branchInfo.branchID != null) {
+            if (branchInfo.branchID != null && branchInfo.branchID != branchID) {
                 return fail(400, { duplicateentry: true, branchName:branchName });
             }
             
