@@ -204,9 +204,22 @@ const submitQueue = (id, mobile) => {
     const key = generateKey(id, mobile)
     
     const query = `
-    INSERT INTO users (group_id, time_created, status, mobile, key, queue) 
+    INSERT INTO users (group_id, time_created, status, mobile, key, queue, queue_length, day_of_week, public_holiday) 
     SELECT 
-        $1, current_timestamp, $2, $3, $4,  CASE WHEN MAX(queue) IS NULL THEN 1 ELSE MAX(queue)+1 END FROM users 
+        $1, 
+        current_timestamp, 
+        $2, 
+        $3, 
+        $4,  
+        CASE 
+            WHEN MAX(queue) IS NULL THEN 1 
+            ELSE MAX(queue)+1 
+        END,
+        COUNT(queue) FILTER (WHERE status = $2::varchar),
+        EXTRACT(dow from current_timestamp),
+        (SELECT CASE WHEN COUNT(event_id) > 0 THEN 1 ELSE 0 END 
+        FROM date_events WHERE event_date = current_date)
+    FROM users 
     WHERE 
         group_id = $1 AND time_created > CURRENT_DATE
     RETURNING group_user_id, queue, group_id

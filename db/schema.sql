@@ -45,7 +45,16 @@ CREATE TABLE users (
     mobile character varying(100),
     key character varying(200),
     queue integer,
+    queue_length integer,
+    day_of_week smallint,
+    public_holiday smallint,
     time_cleared timestamp with time zone
+);
+
+CREATE TABLE date_events (
+    event_id SERIAL PRIMARY KEY,
+    event_date date,
+    event_type character varying(200)
 );
 
 CREATE TABLE settings (
